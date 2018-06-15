@@ -44,6 +44,7 @@ def builddict(lang):
 				d[word_len] = []
 			d[word_len].append(word.lower())
 		word = f.readline().strip()
+		word_len = len(word)
 	f.close()
 	return d
 def get_all_possible_words(word_list, word, length):
