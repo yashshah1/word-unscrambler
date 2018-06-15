@@ -44,9 +44,15 @@ def builddict(lang):
 				d[word_len] = []
 			d[word_len].append(word.lower())
 		word = f.readline().strip()
-		word_len = len(word)
 	f.close()
 	return d
+def get_all_possible_words(word_list, word, length):
+	"""
+	what this does is go through word_list, and returns an iterable object 
+	of all possible words in word_list that can be formed from the alphabets of word of length l
+
+	Big question: how?
+	"""
 	
 def main(word):
 	"""
@@ -60,9 +66,19 @@ def main(word):
 	"""
 	d = builddict("british")
 	word_len = len(word)
-	for i in d.keys():
-		print i, ":", len(d[i])
-	print d[word_len][:5:]
+	
+	if word_len == 3:
+		"""
+		passing 3 in our case gets redundant as the word_list contains words only that 
+		are 3 alphabets long, but to make the code more re-usable, meh, whatever!
+		"""
+		L = get_all_possible_words(d[3], word, 3)
+		print_words(L, 3)
+		return 1
+	for counter in range(3, word_len + 1):
+		L = get_all_possible_words(d[counter], word, counter)
+		print_words(L, counter)
+	return 1
 	
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
