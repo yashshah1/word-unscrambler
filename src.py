@@ -47,14 +47,54 @@ def builddict(lang):
 		word_len = len(word)
 	f.close()
 	return d
+def is_anagram(word1, word2):
+	"""
+	"""
+	L = [0 for i in range(26)]
+	for i in word1:
+		index = ord(i) - 97
+		L[index] += 1
+	for i in word2:
+		index = ord(i) - 97
+		if L[index] == 0:
+			return 0
+		L[index] -= 1
+	return not(any(L))
+	
+		
 def get_all_possible_words(word_list, word, length):
 	"""
 	what this does is go through word_list, and returns an iterable object 
 	of all possible words in word_list that can be formed from the alphabets of word of length l
 
 	Big question: how?
+		1. Iter through word_list
+		2. filter out words that have the same length only
+		3. Now all you have to check if they have the same alphabets and the
+			same frequency for those alphabtes, basically check for
+			anagrams!
+		4. if it is an anagram, yield! and continue!
 	"""
-	
+	for iterator in (word_list):
+		if len(iterator) == length:
+			if is_anagram(word, iterator):
+				yield iterator	
+
+def print_words(list_of_words, length):
+	"""
+		Formats and prints
+	"""
+	print str(length) + " letter words"
+	count = 0
+	for i in list_of_words:
+		print i + ", ",
+		count += 1
+		if count == 5:
+			print
+			count = 0
+	print 
+	print
+
 def main(word):
 	"""
 	Main function()
@@ -73,12 +113,12 @@ def main(word):
 		passing 3 in our case gets redundant as the word_list contains words only that 
 		are 3 alphabets long, but to make the code more re-usable, meh, whatever!
 		"""
-		L = get_all_possible_words(d[3], word, 3)
-		print_words(L, 3)
+		word_list = get_all_possible_words(d[3], word, 3)
+		print_words(word_list, 3)
 		return 1
 	for counter in range(3, word_len + 1):
-		L = get_all_possible_words(d[counter], word, counter)
-		print_words(L, counter)
+		word_list = get_all_possible_words(d[counter], word, counter)
+		print_words(word_list, counter)
 	return 1
 	
 if __name__ == "__main__":
