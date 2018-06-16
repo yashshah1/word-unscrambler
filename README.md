@@ -1,5 +1,5 @@
 # Word Unscrambler
-## Usage
+### Usage
 	Clone this repo using `git clone https://github.com/yashshah1/word-unscrambler.git`
 	Change directory using `cd` command
 	Run the code and pass all the words as command line arguments  `python src.py word1 word2 word3`
