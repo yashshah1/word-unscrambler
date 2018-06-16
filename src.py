@@ -12,11 +12,11 @@ def is_valid_word(word):
 		shouldn't have anyother character than alphabets
 	"""
 	if "'" in word or len(word) <= 2:
-		return 0
+		return False
 	for i in word:
 		if not i.isalpha():
-			return 0
-	return 1
+			return False
+	return True
 def build_dict(lang):
 	"""
 	rudimentary implemenatation, needs work
@@ -36,14 +36,16 @@ def build_dict(lang):
 		print "Invalid wordlist"
 		sys.exit(-2)
 	
-	word = f.readline().strip()
+	word = f.readline()
+	word = word[:len(word) - 2:]
 	word_len = len(word)
 	while word:
 		if is_valid_word(word):
 			if not d.has_key(word_len):
 				d[word_len] = []
 			d[word_len].append(word.lower())
-		word = f.readline().strip()
+		word = f.readline()
+		word = word[:len(word) - 2:]
 		word_len = len(word)
 	f.close()
 	return d
