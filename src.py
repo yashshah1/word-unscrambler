@@ -49,6 +49,9 @@ def build_dict(lang):
 	return d
 def is_answer(word1, word2):
 	"""
+	make a frequency array for the first word for each alphabet
+	keep subtracting from there for word2, if any index gets to -1, return 0
+	at the end, return 1
 	"""
 	L = [0 for i in range(26)]
 	for i in word1:
@@ -69,7 +72,9 @@ def get_all_possible_words(word_list, word, length):
 
 	Big question: how?
 		1. Iter through word_list
-		2. 
+		2. See if the word is the desired length
+		3. pass it to a checker function to see if alphabets match, 
+			yield and repeat
 	"""
 	for iterator in (word_list):
 		if len(iterator) == length:
