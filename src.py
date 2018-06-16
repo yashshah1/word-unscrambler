@@ -3,7 +3,7 @@ def usage():
 	"""
 	Prints usage
 	"""
-	print "python src.py <word>"
+	print "python src.py [words]"
 def is_valid_word(word):
 	"""
 	returns a bool to test whether a word is 'valid' or not
@@ -103,7 +103,7 @@ def main(word):
 	"""
 	d = build_dict("british")
 	word_len = len(word)
-	
+	print "All possible combinations for " + word + ": "
 	if word_len == 3:
 		"""
 		passing 3 in our case gets redundant as the word_list contains words only that 
@@ -117,10 +117,12 @@ def main(word):
 		word_list = list(get_all_possible_words(d[counter], word, counter))
 		if len(word_list) != 0:
 			print_words(word_list, counter)
+	print
 	return 1
 	
 if __name__ == "__main__":
-	if len(sys.argv) != 2:
+	if len(sys.argv) < 2:
 		usage()
 		sys.exit(-1)
-	main(sys.argv.pop(1))
+	for i in sys.argv[1::]:
+		main(i)
