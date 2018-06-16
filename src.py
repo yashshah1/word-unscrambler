@@ -17,7 +17,7 @@ def is_valid_word(word):
 		if not i.isalpha():
 			return 0
 	return 1
-def builddict(lang):
+def build_dict(lang):
 	"""
 	rudimentary implemenatation, needs work
 	works only for british at the moment, should change when we add
@@ -47,7 +47,7 @@ def builddict(lang):
 		word_len = len(word)
 	f.close()
 	return d
-def is_anagram(word1, word2):
+def is_answer(word1, word2):
 	"""
 	"""
 	L = [0 for i in range(26)]
@@ -59,7 +59,7 @@ def is_anagram(word1, word2):
 		if L[index] == 0:
 			return 0
 		L[index] -= 1
-	return not(any(L))
+	return 1
 	
 		
 def get_all_possible_words(word_list, word, length):
@@ -69,15 +69,11 @@ def get_all_possible_words(word_list, word, length):
 
 	Big question: how?
 		1. Iter through word_list
-		2. filter out words that have the same length only
-		3. Now all you have to check if they have the same alphabets and the
-			same frequency for those alphabtes, basically check for
-			anagrams!
-		4. if it is an anagram, yield! and continue!
+		2. 
 	"""
 	for iterator in (word_list):
 		if len(iterator) == length:
-			if is_anagram(word, iterator):
+			if is_answer(word, iterator):
 				yield iterator	
 
 def print_words(list_of_words, length):
@@ -105,7 +101,7 @@ def main(word):
 			2.2 gets all possible words by calling get_all_possible_words()
 			2.3 passes to a print function that makes it readable
 	"""
-	d = builddict("british")
+	d = build_dict("british")
 	word_len = len(word)
 	
 	if word_len == 3:
@@ -113,12 +109,14 @@ def main(word):
 		passing 3 in our case gets redundant as the word_list contains words only that 
 		are 3 alphabets long, but to make the code more re-usable, meh, whatever!
 		"""
-		word_list = get_all_possible_words(d[3], word, 3)
-		print_words(word_list, 3)
+		word_list = list(get_all_possible_words(d[3], word, 3))
+		if len(word_list) != 0:
+			print_words(word_list, 3)
 		return 1
 	for counter in range(3, word_len + 1):
-		word_list = get_all_possible_words(d[counter], word, counter)
-		print_words(word_list, counter)
+		word_list = list(get_all_possible_words(d[counter], word, counter))
+		if len(word_list) != 0:
+			print_words(word_list, counter)
 	return 1
 	
 if __name__ == "__main__":
