@@ -109,7 +109,7 @@ def main(word):
 		passing 3 in our case gets redundant as the word_list contains words only that 
 		are 3 alphabets long, but to make the code more re-usable, meh, whatever!
 		"""
-		word_list = list(get_all_possible_words(d[3], word, 3))
+		word_list = list(set(list(get_all_possible_words(d[3], word, 3))))
 		if len(word_list) != 0:
 			print_words(word_list, 3)
 		return 1
