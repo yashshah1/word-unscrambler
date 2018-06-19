@@ -36,16 +36,14 @@ def build_dict(lang):
 		print "Invalid wordlist"
 		sys.exit(-2)
 	
-	word = f.readline()
-	word = word[:len(word) - 2:]
+	word = f.readline().strip()
 	word_len = len(word)
 	while word:
 		if is_valid_word(word):
 			if not d.has_key(word_len):
 				d[word_len] = []
 			d[word_len].append(word.lower())
-		word = f.readline()
-		word = word[:len(word) - 2:]
+		word = f.readline().strip()
 		word_len = len(word)
 	f.close()
 	return d
@@ -87,7 +85,7 @@ def print_words(list_of_words, length):
 	"""
 		Formats and prints
 	"""
-	print str(length) + " letter words"
+	print str(length) + " letter words (" + str(len(list_of_words)) + " found)"
 	count = 0
 	for i in list_of_words:
 		print i + ", ",
@@ -111,25 +109,16 @@ def main(word):
 	d = build_dict("british")
 	word_len = len(word)
 	print "All possible combinations for " + word + ": "
-	if word_len == 3:
-		"""
-		passing 3 in our case gets redundant as the word_list contains words only that 
-		are 3 alphabets long, but to make the code more re-usable, meh, whatever!
-		"""
-		word_list = list(set(list(get_all_possible_words(d[3], word, 3))))
-		if len(word_list) != 0:
-			print_words(word_list, 3)
-		return 1
 	for counter in range(3, word_len + 1):
-		word_list = list(get_all_possible_words(d[counter], word, counter))
+		word_list = list(set(list(get_all_possible_words(d[counter], word, counter))))
 		if len(word_list) != 0:
 			print_words(word_list, counter)
 	print
 	return 1
 	
 if __name__ == "__main__":
-	if len(sys.argv) < 2:
-		usage()
-		sys.exit(-1)
-	for i in sys.argv[1::]:
-		main(i)
+	if len(sys.argv) == 1:
+		main(raw_input())
+	else:
+		for i in sys.argv[1::]:
+			main(i)
