@@ -60,9 +60,9 @@ def is_answer(word1, word2):
 	for i in word2:
 		index = ord(i) - 97
 		if L[index] == 0:
-			return 0
+			return False
 		L[index] -= 1
-	return 1
+	return True
 	
 		
 def get_all_possible_words(word_list, word, length):
@@ -93,8 +93,7 @@ def print_words(list_of_words, length):
 		if count == 5:
 			print
 			count = 0
-	print 
-	print
+	print "\n"
 
 def main(word):
 	"""
